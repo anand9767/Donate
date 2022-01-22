@@ -74,7 +74,7 @@ class MyProducts(viewsets.ModelViewSet):
     queryset = ProductDetail.objects.all()
     serializer_class = ProductSerialiser
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['userName']
+    filterset_fields = ['userName','id']
 
 
 class Products(viewsets.ModelViewSet):
