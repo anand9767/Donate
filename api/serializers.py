@@ -25,3 +25,9 @@ class ProductSerialiser(serializers.ModelSerializer):
     class Meta:
         model = ProductDetail
         fields = ['id','title','description','image','latitude','longitude','number','email','contact_comments','category','sub_category','extra_comments','userId','userName']
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = User
+    old_password = serializers.CharField(required = True)
+    new_password = serializers.CharField(required=True)
