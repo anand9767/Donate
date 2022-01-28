@@ -3,6 +3,7 @@ from math import ceil
 from operator import ge
 from rest_framework import status
 from rest_framework import generics
+from rest_framework.filters import SearchFilter
 from django.contrib.gis.measure import Distance,D
 import io
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
@@ -75,7 +76,6 @@ class LoginAPI(KnoxLoginView):
         })
 
 class UserList(viewsets.ModelViewSet):
-   
     authentication_classes = [authentication.TokenAuthentication]
     permission_class = [permissions.IsAuthenticated]
 
@@ -92,8 +92,9 @@ class MyProducts(viewsets.ModelViewSet):
 
     queryset = ProductDetail.objects.all()
     serializer_class = ProductSerialiser
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend,SearchFilter]
     filterset_fields = ['userName','id']
+    search_fields = ['title','category','sub_category']
 
 
 class Products(viewsets.ModelViewSet):
