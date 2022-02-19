@@ -15,3 +15,4 @@ class ProductDetail(models.Model):
     extra_comments = models.TextField()
     userId = models.IntegerField()
     userName = models.CharField(max_length=15)
+    name = models.CharField(max_length=50,default='')

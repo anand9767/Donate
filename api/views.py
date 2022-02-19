@@ -92,9 +92,23 @@ class MyProducts(viewsets.ModelViewSet):
 
     queryset = ProductDetail.objects.all()
     serializer_class = ProductSerialiser
+
     filter_backends = [DjangoFilterBackend,SearchFilter]
     filterset_fields = ['userName','id']
     search_fields = ['title','category','sub_category']
+
+
+    # def list(self, request):
+    #     queryset = ProductDetail.objects.all()
+    #     serializer = ProductSerialiser(queryset, many=True)
+    #     return Response({
+    #         'message':'success',
+    #         'data':serializer.data})
+
+    # def retrieve(self, request, pk=None):  
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance)
+    #     return Response({'data':serializer.data})
 
 
 class Products(viewsets.ModelViewSet):

@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class ProductSerialiser(serializers.ModelSerializer):
     class Meta:
         model = ProductDetail
-        fields = ['id','title','description','image','latitude','longitude','number','email','contact_comments','category','sub_category','extra_comments','userId','userName']
+        fields = ['id','title','description','image','latitude','longitude','number','email','contact_comments','category','sub_category','extra_comments','userId','userName','name']
 
 
 class ChangePasswordSerializer(serializers.Serializer):
