@@ -13,6 +13,7 @@ class ProductDetail(models.Model):
     category = models.CharField(max_length=30)
     sub_category = models.CharField(max_length=50)
     extra_comments = models.TextField()
+    timeStamp = models.CharField(max_length=50,default='')
     userId = models.IntegerField()
     userName = models.CharField(max_length=15)
     name = models.CharField(max_length=50,default='')
