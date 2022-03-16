@@ -120,10 +120,8 @@ class Products(viewsets.ModelViewSet):
         latitude = self.request.query_params.get('latitude')
         longitude = self.request.query_params.get('longitude')
         radius = self.request.query_params.get('radius')
-        # print('latitude123',latitude , longitude,radius)
-        # dis = calculateDistance((13.0631,77.6207), (13.1155,77.1090))
-        # print('distace ',ceil(dis))
         queryset = ProductDetail.objects.all()
+        print('query set',queryset)
         newqueryset = []
         for queryData in queryset.iterator():
             if(calculateDistance((queryData.latitude,queryData.longitude),(latitude,longitude)) <= int(radius)):
