@@ -4,7 +4,7 @@ from django.db import models
 class ProductDetail(models.Model):
     title = models.CharField(max_length= 200)
     description = models.TextField()
-    image = models.ImageField(upload_to='Donate/images/')
+    image = models.ImageField(upload_to='Donate/images/',blank = True,)
     latitude = models.CharField(max_length=50)
     longitude = models.CharField(max_length=50)
     number = models.CharField(max_length=15)
