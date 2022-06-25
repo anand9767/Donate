@@ -11,7 +11,7 @@ from rest_framework.parsers import JSONParser
 from multiprocessing import context
 from select import select
 from django.shortcuts import render
-from api.models import ProductDetail
+from api.models import MyChats, ProductDetail
 from rest_framework import generics, permissions
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -24,7 +24,7 @@ from knox.views import LoginView as KnoxLoginView
 from rest_framework.generics import ListAPIView,RetrieveUpdateAPIView,GenericAPIView
 from rest_framework.mixins import DestroyModelMixin
 from rest_framework import viewsets
-from .serializers import ChangePasswordSerializer, ProductSerialiser, UserSerializer, RegisterSerializer
+from .serializers import ChangePasswordSerializer, MyChatsSerializer, ProductSerialiser, UserSerializer, RegisterSerializer
 from api import serializers
 from django_filters.rest_framework import DjangoFilterBackend
 from geopy.distance import distance
@@ -110,6 +110,15 @@ class MyProducts(viewsets.ModelViewSet):
     #     serializer = self.get_serializer(instance)
     #     return Response({'data':serializer.data})
 
+class Chats(viewsets.ModelViewSet):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_class = [permissions.IsAuthenticated]
+
+    queryset = MyChats.objects.all()
+    serializer_class = MyChatsSerializer
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['intiatorId','friendId']
 
 class Products(viewsets.ModelViewSet):
      authentication_classes = [authentication.TokenAuthentication]
