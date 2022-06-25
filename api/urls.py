@@ -14,6 +14,7 @@ router = DefaultRouter()
 router.register('api/user',views.UserList,basename = 'user')
 router.register('api/myproduct',views.MyProducts,basename = 'myproduct')
 router.register('api/product',views.Products,basename = 'product'),
+router.register('api/mychats',views.Chats,basename='mychats'),
 
 urlpatterns = [
     path('api/register/', RegisterAPI.as_view(), name='register'),
