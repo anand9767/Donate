@@ -22,6 +22,7 @@ class ProductDetail(models.Model):
 class MyChats(models.Model):
     intiatorId  = models.CharField(max_length= 30) 
     friendId = models.CharField(max_length= 30)
+    initiatorName = models.CharField(max_length=200,default='',blank=True)
     friendName = models.CharField(max_length= 200)
     lastMessage = models.TextField(blank=True)
     timeStampMessage = models.CharField(max_length= 300)

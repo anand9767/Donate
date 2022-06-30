@@ -29,7 +29,7 @@ class ProductSerialiser(serializers.ModelSerializer):
 class MyChatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyChats
-        fields = ['id','intiatorId','friendId','friendName','lastMessage','timeStampMessage','timeStampChat']
+        fields = ['id','intiatorId','friendId','initiatorName','friendName','lastMessage','timeStampMessage','timeStampChat']
 
 class ChangePasswordSerializer(serializers.Serializer):
     model = User
