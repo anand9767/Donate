@@ -1,7 +1,7 @@
 from dataclasses import field, fields
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import MyChats, ProductDetail
+from .models import FCMTokens, MyChats, ProductDetail
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -30,6 +30,13 @@ class MyChatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyChats
         fields = ['id','intiatorId','friendId','initiatorName','friendName','lastMessage','timeStampMessage','timeStampChat']
+
+class MyFCMTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FCMTokens
+        fields = ['id','userId','token','timestamp']
+
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     model = User

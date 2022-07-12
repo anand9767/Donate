@@ -11,7 +11,7 @@ from rest_framework.parsers import JSONParser
 from multiprocessing import context
 from select import select
 from django.shortcuts import render
-from api.models import MyChats, ProductDetail
+from api.models import FCMTokens, MyChats, ProductDetail
 from rest_framework import generics, permissions
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -24,7 +24,7 @@ from knox.views import LoginView as KnoxLoginView
 from rest_framework.generics import ListAPIView,RetrieveUpdateAPIView,GenericAPIView
 from rest_framework.mixins import DestroyModelMixin
 from rest_framework import viewsets
-from .serializers import ChangePasswordSerializer, MyChatsSerializer, ProductSerialiser, UserSerializer, RegisterSerializer
+from .serializers import ChangePasswordSerializer, MyChatsSerializer, MyFCMTokenSerializer, ProductSerialiser, UserSerializer, RegisterSerializer
 from api import serializers
 from django_filters.rest_framework import DjangoFilterBackend
 from geopy.distance import distance
@@ -96,19 +96,6 @@ class MyProducts(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend,SearchFilter]
     filterset_fields = ['userName','id']
     search_fields = ['title','category','sub_category']
-
-
-    # def list(self, request):
-    #     queryset = ProductDetail.objects.all()
-    #     serializer = ProductSerialiser(queryset, many=True)
-    #     return Response({
-    #         'message':'success',
-    #         'data':serializer.data})
-
-    # def retrieve(self, request, pk=None):  
-    #     instance = self.get_object()
-    #     serializer = self.get_serializer(instance)
-    #     return Response({'data':serializer.data})
 
 class Chats(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
@@ -236,6 +223,41 @@ class ChangePasswordView(generics.UpdateAPIView):
                 return Response(response)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CreateOrUpdateFCMToken(generics.ListCreateAPIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_class = [permissions.IsAuthenticated]
+
+    queryset = FCMTokens.objects.all()
+    serializer_class = MyFCMTokenSerializer
+
+    def create(self, request, *args, **kwargs):
+        myModel, created = FCMTokens.objects.update_or_create(userId=request.data['userId'],
+                                                           defaults={
+                                                             'token': request.data['token'],
+                                                             'timestamp':request.data['timestamp']
+                                                           })
+        serializer = MyFCMTokenSerializer(myModel, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+
+        if created:
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.data, status.HTTP_200_OK)
+
+
+class GetFCMToken(viewsets.ModelViewSet):
+          
+        authentication_classes = [authentication.TokenAuthentication]
+        permission_class = [permissions.IsAuthenticated]
+
+        queryset = FCMTokens.objects.all()
+        serializer_class = MyFCMTokenSerializer
+
+        filter_backends = [DjangoFilterBackend]
+        filterset_fields = ['userId']
+
 
 
 class CustomAuthToken(ObtainAuthToken):

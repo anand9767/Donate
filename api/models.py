@@ -1,5 +1,7 @@
 from distutils.command.upload import upload
 from email.policy import default
+from sqlite3 import Timestamp
+from turtle import mode
 from django.db import models
 
 class ProductDetail(models.Model):
@@ -27,3 +29,9 @@ class MyChats(models.Model):
     lastMessage = models.TextField(blank=True)
     timeStampMessage = models.CharField(max_length= 300)
     timeStampChat = models.CharField(max_length= 300)
+
+
+class FCMTokens(models.Model):
+    userId = models.CharField(max_length=30)
+    token = models.TextField()
+    timestamp = models.CharField(max_length=50,blank=True)
