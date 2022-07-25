@@ -24,7 +24,7 @@ class ProductDetail(models.Model):
 class MyChats(models.Model):
     intiatorId  = models.CharField(max_length= 30) 
     friendId = models.CharField(max_length= 30)
-    initiatorName = models.CharField(max_length=200,blank=True)
+    initiatorName = models.CharField(max_length=200,)
     friendName = models.CharField(max_length= 200)
     lastMessage = models.TextField(blank=True)
     timeStampMessage = models.CharField(max_length= 300)
@@ -35,3 +35,18 @@ class FCMTokens(models.Model):
     userId = models.CharField(max_length=30)
     token = models.TextField()
     timestamp = models.CharField(max_length=50,blank=True)
+
+
+class RequestedProductDetail(models.Model):
+    title = models.TextField(blank=True)
+    description = models.TextField()
+    latitude = models.CharField(max_length=50)
+    longitude = models.CharField(max_length=50)
+    number = models.CharField(max_length=15,blank = True,)
+    email = models.EmailField(blank = True,)
+    category = models.CharField(max_length=30,blank=True)
+    sub_category = models.CharField(max_length=50,blank = True,)
+    timeStamp = models.CharField(max_length=50)
+    userId = models.IntegerField()
+    userName = models.CharField(max_length=15)
+    name = models.CharField(max_length=50,blank=True)

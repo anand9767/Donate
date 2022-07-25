@@ -1,7 +1,7 @@
 from dataclasses import field, fields
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import FCMTokens, MyChats, ProductDetail
+from .models import FCMTokens, MyChats, ProductDetail, RequestedProductDetail
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -35,6 +35,11 @@ class MyFCMTokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = FCMTokens
         fields = ['id','userId','token','timestamp']
+
+class RequestedProductSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = RequestedProductDetail
+        fields = ['id','title','description','latitude','longitude','number','email','category','sub_category','timeStamp','userId','userName','name']
 
 
 

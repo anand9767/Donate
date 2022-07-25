@@ -15,6 +15,8 @@ router = DefaultRouter()
 router.register('api/user',views.UserList,basename = 'user')
 router.register('api/myproduct',views.MyProducts,basename = 'myproduct')
 router.register('api/product',views.Products,basename = 'product'),
+router.register('api/myrequestedproduct',views.MyRequestedProducts,basename = 'myrequestedproduct')
+router.register('api/requestedproducts',views.RequestedProducts,basename = 'requestedproducts'),
 router.register('api/mychats',views.Chats,basename='mychats'),
 router.register('api/getTokens',views.GetFCMToken,basename='mytokens'),
 
@@ -22,6 +24,7 @@ urlpatterns = [
     path('api/register/', RegisterAPI.as_view(), name='register'),
     path('api/login/',LoginAPI.as_view(),name='login'),
     path('api/deleteproduct/',views.delete_product,name='deleteproduct'),
+    path('api/deleterequestedproduct/',views.delete_requested_product,name='deleterequestedproduct'),
     path('api/deleteuser/',views.delete_user,name='deleteuser'),
     path('api/updateproduct/',UpdateProduct.as_view(),name='updateproduct'),
     path('api/updateuser/',UpdateUser.as_view(),name='updateuser'),

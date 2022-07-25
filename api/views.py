@@ -11,7 +11,7 @@ from rest_framework.parsers import JSONParser
 from multiprocessing import context
 from select import select
 from django.shortcuts import render
-from api.models import FCMTokens, MyChats, ProductDetail
+from api.models import FCMTokens, MyChats, ProductDetail, RequestedProductDetail
 from rest_framework import generics, permissions
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -24,7 +24,7 @@ from knox.views import LoginView as KnoxLoginView
 from rest_framework.generics import ListAPIView,RetrieveUpdateAPIView,GenericAPIView
 from rest_framework.mixins import DestroyModelMixin
 from rest_framework import viewsets
-from .serializers import ChangePasswordSerializer, MyChatsSerializer, MyFCMTokenSerializer, ProductSerialiser, UserSerializer, RegisterSerializer
+from .serializers import ChangePasswordSerializer, MyChatsSerializer, MyFCMTokenSerializer, ProductSerialiser, RequestedProductSerialiser, UserSerializer, RegisterSerializer
 from api import serializers
 from django_filters.rest_framework import DjangoFilterBackend
 from geopy.distance import distance
@@ -97,6 +97,20 @@ class MyProducts(viewsets.ModelViewSet):
     filterset_fields = ['userName','id']
     search_fields = ['title','category','sub_category']
 
+
+class MyRequestedProducts(viewsets.ModelViewSet):
+    
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_class = [permissions.IsAuthenticated]
+
+    queryset = RequestedProductDetail.objects.all()
+    serializer_class = RequestedProductSerialiser
+
+    filter_backends = [DjangoFilterBackend,SearchFilter]
+    filterset_fields = ['userName','id']
+    search_fields = ['title','category','sub_category']
+
+
 class Chats(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_class = [permissions.IsAuthenticated]
@@ -124,6 +138,23 @@ class Products(viewsets.ModelViewSet):
                 newqueryset.append(queryData)
         return newqueryset
 
+class RequestedProducts(viewsets.ModelViewSet):
+     authentication_classes = [authentication.TokenAuthentication]
+     permission_class = [permissions.IsAuthenticated]
+
+     serializer_class = RequestedProductSerialiser
+     def get_queryset(self) :
+        latitude = self.request.query_params.get('latitude')
+        longitude = self.request.query_params.get('longitude')
+        radius = self.request.query_params.get('radius')
+        queryset = RequestedProductDetail.objects.all()
+        print('query set',queryset)
+        newqueryset = []
+        for queryData in queryset.iterator():
+            if(calculateDistance((queryData.latitude,queryData.longitude),(latitude,longitude)) <= int(radius)):
+                newqueryset.append(queryData)
+        return newqueryset
+
 @csrf_exempt
 @api_view(['DELETE'])
 @authentication_classes((authentication.TokenAuthentication,))
@@ -136,6 +167,21 @@ def delete_product(request,format=None):
     product = ProductDetail.objects.get(id=id)
     product.delete()
     return JsonResponse({'message':'Product Deleted'},safe=False)
+
+
+@csrf_exempt
+@api_view(['DELETE'])
+@authentication_classes((authentication.TokenAuthentication,))
+@permission_classes((permissions.IsAuthenticated,))
+def delete_requested_product(request,format=None):
+    json_data = request.body
+    stream = io.BytesIO(json_data)
+    pythondata = JSONParser().parse(stream)
+    id = pythondata.get('id')
+    product = RequestedProductDetail.objects.get(id=id)
+    product.delete()
+    return JsonResponse({'message':'Product Deleted'},safe=False)
+
 
 @csrf_exempt
 @api_view(['DELETE'])
