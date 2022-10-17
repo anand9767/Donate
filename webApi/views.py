@@ -4,12 +4,17 @@ from rest_framework import viewsets
 from .utils import ResponseInfo
 from .serializers import MenuItemSerializer,ItemSerializer
 from .models import MenuItem,Item
+from rest_framework import authentication
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 
 
 #menuitems
 class MenuItemViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_class = [permissions.IsAuthenticated]
+
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
 
@@ -72,6 +77,10 @@ class MenuItemViewSet(viewsets.ModelViewSet):
 
 #items
 class ItemViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_class = [permissions.IsAuthenticated]
+
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
