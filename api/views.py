@@ -40,8 +40,8 @@ from rest_framework.decorators import permission_classes, authentication_classes
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
 
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -59,8 +59,8 @@ class RegisterAPI(generics.GenericAPIView):
 class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
 
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
@@ -79,8 +79,8 @@ class LoginAPI(KnoxLoginView):
 
 
 class UserList(viewsets.ModelViewSet):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -90,8 +90,8 @@ class UserList(viewsets.ModelViewSet):
 
 class MyProducts(viewsets.ModelViewSet):
 
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     queryset = ProductDetail.objects.all()
     serializer_class = ProductSerializer
@@ -103,8 +103,8 @@ class MyProducts(viewsets.ModelViewSet):
 
 class MyRequestedProducts(viewsets.ModelViewSet):
 
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     queryset = RequestedProductDetail.objects.all()
     serializer_class = RequestedProductSerializer
@@ -115,8 +115,8 @@ class MyRequestedProducts(viewsets.ModelViewSet):
 
 
 class Chats(viewsets.ModelViewSet):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     queryset = MyChats.objects.all()
     serializer_class = MyChatsSerializer
@@ -126,8 +126,8 @@ class Chats(viewsets.ModelViewSet):
 
 
 class Products(viewsets.ModelViewSet):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     serializer_class = ProductSerializer
 
@@ -145,8 +145,8 @@ class Products(viewsets.ModelViewSet):
 
 
 class RequestedProducts(viewsets.ModelViewSet):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     serializer_class = RequestedProductSerializer
 
@@ -165,8 +165,8 @@ class RequestedProducts(viewsets.ModelViewSet):
 
 @csrf_exempt
 @api_view(['DELETE'])
-@authentication_classes((authentication.TokenAuthentication,))
-@permission_classes((permissions.IsAuthenticated,))
+# @authentication_classes((authentication.TokenAuthentication,))
+# @permission_classes((permissions.IsAuthenticated,))
 def delete_product(request, format=None):
     json_data = request.body
     stream = io.BytesIO(json_data)
@@ -179,8 +179,8 @@ def delete_product(request, format=None):
 
 @csrf_exempt
 @api_view(['DELETE'])
-@authentication_classes((authentication.TokenAuthentication,))
-@permission_classes((permissions.IsAuthenticated,))
+# @authentication_classes((authentication.TokenAuthentication,))
+# @permission_classes((permissions.IsAuthenticated,))
 def delete_requested_product(request, format=None):
     json_data = request.body
     stream = io.BytesIO(json_data)
@@ -193,8 +193,8 @@ def delete_requested_product(request, format=None):
 
 @csrf_exempt
 @api_view(['DELETE'])
-@authentication_classes((authentication.TokenAuthentication,))
-@permission_classes((permissions.IsAuthenticated,))
+# @authentication_classes((authentication.TokenAuthentication,))
+# @permission_classes((permissions.IsAuthenticated,))
 def delete_user(request, format=None):
     json_data = request.body
     stream = io.BytesIO(json_data)
@@ -206,8 +206,8 @@ def delete_user(request, format=None):
 
 
 class UpdateProduct(generics.UpdateAPIView):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
         json_data = request.body
@@ -227,8 +227,8 @@ class UpdateProduct(generics.UpdateAPIView):
 
 
 class UpdateUser(generics.UpdateAPIView):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
         json_data = request.body
@@ -251,8 +251,8 @@ class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     model = User
 
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     def get_object(self, queryset=None):
         obj = self.request.user
@@ -281,8 +281,8 @@ class ChangePasswordView(generics.UpdateAPIView):
 
 
 class CreateOrUpdateFCMToken(generics.ListCreateAPIView):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     queryset = FCMTokens.objects.all()
     serializer_class = MyFCMTokenSerializer
@@ -306,8 +306,8 @@ class CreateOrUpdateFCMToken(generics.ListCreateAPIView):
 
 class GetFCMToken(viewsets.ModelViewSet):
 
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_class = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_class = [permissions.IsAuthenticated]
 
     queryset = FCMTokens.objects.all()
     serializer_class = MyFCMTokenSerializer
