@@ -3,11 +3,13 @@ from email.policy import default
 from sqlite3 import Timestamp
 from turtle import mode
 from django.db import models
+from django.contrib.auth.models import User
 
 class ProductDetail(models.Model):
     title = models.CharField(max_length= 200)
     description = models.TextField()
-    image = models.ImageField(upload_to='Donate/images/',blank = True,default = '')
+    # image = models.ImageField(upload_to='Donate/images/',blank = True,default = '')
+    image = models.URLField(blank = True,default = '')
     latitude = models.CharField(max_length=50)
     longitude = models.CharField(max_length=50)
     number = models.CharField(max_length=15,blank = True,)
@@ -17,12 +19,13 @@ class ProductDetail(models.Model):
     sub_category = models.CharField(max_length=50,blank = True,)
     extra_comments = models.TextField(blank = True,)
     timeStamp = models.CharField(max_length=50)
-    userId = models.IntegerField()
-    userName = models.CharField(max_length=15)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    # userName = models.CharField(max_length=15)
     name = models.CharField(max_length=50,default='')
 
 class MyChats(models.Model):
-    intiatorId  = models.CharField(max_length= 30) 
+    initiatorId  = models.CharField(max_length= 30) 
     friendId = models.CharField(max_length= 30)
     initiatorName = models.CharField(max_length=200,)
     friendName = models.CharField(max_length= 200)
@@ -32,7 +35,8 @@ class MyChats(models.Model):
 
 
 class FCMTokens(models.Model):
-    userId = models.CharField(max_length=30)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
     token = models.TextField()
     timestamp = models.CharField(max_length=50,blank=True)
 
@@ -47,6 +51,8 @@ class RequestedProductDetail(models.Model):
     category = models.CharField(max_length=30,blank=True)
     sub_category = models.CharField(max_length=50,blank = True,)
     timeStamp = models.CharField(max_length=50)
-    userId = models.IntegerField()
-    userName = models.CharField(max_length=15)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    # userId = models.IntegerField()
+    # userName = models.CharField(max_length=15)
     name = models.CharField(max_length=50,blank=True)
