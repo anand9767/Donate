@@ -30,6 +30,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
     class Meta:
         model = ProductDetail
         fields = '__all__'
