@@ -32,28 +32,25 @@ class RegisterSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductDetail
-        fields = ['id', 'title', 'description', 'image', 'latitude', 'longitude', 'number', 'email',
-                  'contact_comments', 'category', 'sub_category', 'extra_comments', 'timeStamp', 'userId', 'userName', 'name']
+        fields = '__all__'
 
 
 class MyChatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyChats
-        fields = ['id', 'initiatorId', 'friendId', 'initiatorName',
-                  'friendName', 'lastMessage', 'timeStampMessage', 'timeStampChat']
+        fields = '__all__'
 
 
 class MyFCMTokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = FCMTokens
-        fields = ['id', 'userId', 'token', 'timestamp']
+        fields = '__all__'
 
 
 class RequestedProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestedProductDetail
-        fields = ['id', 'title', 'description', 'latitude', 'longitude', 'number',
-                  'email', 'category', 'sub_category', 'timeStamp', 'userId', 'userName', 'name']
+        fields = '__all__'
 
 
 class ChangePasswordSerializer(serializers.Serializer):
