@@ -135,13 +135,13 @@ class Products(viewsets.ModelViewSet):
         latitude = self.request.query_params.get('latitude')
         longitude = self.request.query_params.get('longitude')
         radius = self.request.query_params.get('radius')
-        queryset = ProductDetail.objects.all()
+        queryset = ProductDetail.objects.all().order_by('-created_at')
         print('query set', queryset)
-        newqueryset = []
+        new_queryset = []
         for queryData in queryset.iterator():
             if (calculateDistance((queryData.latitude, queryData.longitude), (latitude, longitude)) <= int(radius)):
-                newqueryset.append(queryData)
-        return newqueryset
+                new_queryset.append(queryData)
+        return new_queryset
 
 
 class RequestedProducts(viewsets.ModelViewSet):
@@ -154,13 +154,13 @@ class RequestedProducts(viewsets.ModelViewSet):
         latitude = self.request.query_params.get('latitude')
         longitude = self.request.query_params.get('longitude')
         radius = self.request.query_params.get('radius')
-        queryset = RequestedProductDetail.objects.all()
+        queryset = RequestedProductDetail.objects.all().order_by('-created_at')
         print('query set', queryset)
-        newqueryset = []
+        new_queryset = []
         for queryData in queryset.iterator():
             if (calculateDistance((queryData.latitude, queryData.longitude), (latitude, longitude)) <= int(radius)):
-                newqueryset.append(queryData)
-        return newqueryset
+                new_queryset.append(queryData)
+        return new_queryset
 
 
 @csrf_exempt
