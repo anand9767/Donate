@@ -93,7 +93,7 @@ class MyProducts(viewsets.ModelViewSet):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
 
-    queryset = ProductDetail.objects.all()
+    queryset = ProductDetail.objects.all().order_by('-created_at')
     serializer_class = ProductSerializer
 
     filter_backends = [DjangoFilterBackend, SearchFilter]
@@ -106,7 +106,7 @@ class MyRequestedProducts(viewsets.ModelViewSet):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
 
-    queryset = RequestedProductDetail.objects.all()
+    queryset = RequestedProductDetail.objects.all().order_by('-created_at')
     serializer_class = RequestedProductSerializer
 
     filter_backends = [DjangoFilterBackend, SearchFilter]

@@ -30,10 +30,15 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = ProductDetail
-        fields = '__all__'
+        fields = ('id', 'title', 'description', 'image', 'latitude', 'longitude', 'number', 'email',
+                  'contact_comments', 'category', 'sub_category', 'extra_comments', 'timeStamp', 'user', 'name', 'user_id')
+        extra_kwargs = {
+            'user_id': {'source': 'user', 'write_only': True},
+        }
 
 
 class MyChatsSerializer(serializers.ModelSerializer):

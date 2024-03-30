@@ -20,9 +20,11 @@ class ProductDetail(models.Model):
     extra_comments = models.TextField(blank = True,)
     timeStamp = models.DateTimeField(max_length=50)
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, blank=True)
+        User, on_delete=models.CASCADE,)
     # userName = models.CharField(max_length=15)
     name = models.CharField(max_length=50,default='')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class MyChats(models.Model):
     initiatorId  = models.CharField(max_length= 30) 
@@ -56,3 +58,5 @@ class RequestedProductDetail(models.Model):
     # userId = models.IntegerField()
     # userName = models.CharField(max_length=15)
     name = models.CharField(max_length=50,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
