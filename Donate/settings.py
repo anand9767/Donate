@@ -61,7 +61,11 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:35341',
+    'http://localhost:3000',
+    "https://donate-93ac7.web.app"
 ]
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 ROOT_URLCONF = 'Donate.urls'
 
