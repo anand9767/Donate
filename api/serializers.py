@@ -1,7 +1,7 @@
 from dataclasses import field, fields
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import FCMTokens, MyChats, ProductDetail, RequestedProductDetail
+from .models import *
 
 # User Serializer
 
@@ -56,6 +56,11 @@ class MyFCMTokenSerializer(serializers.ModelSerializer):
 class RequestedProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestedProductDetail
+        fields = '__all__'
+
+class DeleteAccountRequestedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DeleteAccountRequest
         fields = '__all__'
 
 

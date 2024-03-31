@@ -11,7 +11,7 @@ from rest_framework.parsers import JSONParser
 from multiprocessing import context
 from select import select
 from django.shortcuts import render
-from api.models import FCMTokens, MyChats, ProductDetail, RequestedProductDetail
+from api.models import *
 from rest_framework import generics, permissions
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -24,8 +24,8 @@ from knox.views import LoginView as KnoxLoginView
 from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, GenericAPIView
 from rest_framework.mixins import DestroyModelMixin
 from rest_framework import viewsets
-from .serializers import ChangePasswordSerializer, MyChatsSerializer, MyFCMTokenSerializer, ProductSerializer, RequestedProductSerializer, UserSerializer, RegisterSerializer
-from api import serializers
+from .serializers import *
+# from api import serializers
 from django_filters.rest_framework import DjangoFilterBackend
 from geopy.distance import distance
 from rest_framework import authentication
@@ -328,7 +328,13 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id': user.pk,
             'email': user.email
         })
-
+    
 
 def calculateDistance(location1, location2):
     return ceil(distance(location1, location2).kilometers)
+
+
+class DeleteAccountRequestViewSet(viewsets.ModelViewSet):
+    queryset = DeleteAccountRequest.objects.all()
+    serializer_class = DeleteAccountRequestedSerializer
+

@@ -3,7 +3,7 @@ from email.mime import base
 from posixpath import basename
 from tkinter import N
 from unicodedata import name
-from .views import CreateOrUpdateFCMToken, RegisterAPI,LoginAPI,ChangePasswordView,CustomAuthToken, UpdateProduct, UpdateUser
+from .views import *
 from django.urls import path,include
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from rest_framework.routers import DefaultRouter
@@ -19,9 +19,12 @@ router.register('api/myrequestedproduct',views.MyRequestedProducts,basename = 'm
 router.register('api/requestedproducts',views.RequestedProducts,basename = 'requestedproducts'),
 router.register('api/mychats',views.Chats,basename='mychats'),
 router.register('api/getTokens',views.GetFCMToken,basename='mytokens'),
+router.register('api/delete-account-request',
+                views.DeleteAccountRequestViewSet, basename='delete-account-request'),
 
 urlpatterns = [
     path('api/register/', RegisterAPI.as_view(), name='register'),
+    # path('api/delete-account-request', DeleteAccountRequest.as_view(), name='delete-account-request'),
     path('api/login/',LoginAPI.as_view(),name='login'),
     path('api/deleteproduct/',views.delete_product,name='deleteproduct'),
     path('api/deleterequestedproduct/',views.delete_requested_product,name='deleterequestedproduct'),
