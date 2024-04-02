@@ -48,9 +48,13 @@ class MyChatsSerializer(serializers.ModelSerializer):
 
 
 class MyFCMTokenSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = FCMTokens
-        fields = '__all__'
+        fields = ('token','timestamp', 'user','user_id')
+        extra_kwargs = {
+            'user_id': {'source': 'user', 'write_only': True},
+        }
 
 
 class RequestedProductSerializer(serializers.ModelSerializer):

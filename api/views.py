@@ -313,7 +313,7 @@ class GetFCMToken(viewsets.ModelViewSet):
     serializer_class = MyFCMTokenSerializer
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['userId']
+    filterset_fields = ['user__id', 'user__username']
 
 
 class CustomAuthToken(ObtainAuthToken):

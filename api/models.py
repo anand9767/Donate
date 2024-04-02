@@ -40,7 +40,7 @@ class FCMTokens(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True)
     token = models.TextField()
-    timestamp = models.CharField(max_length=50,blank=True)
+    timestamp = models.DateTimeField()
 
 
 class RequestedProductDetail(models.Model):
