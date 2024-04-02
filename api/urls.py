@@ -17,7 +17,7 @@ router.register('api/my-product',views.MyProducts,basename = 'my-product')
 router.register('api/product',views.Products,basename = 'product'),
 router.register('api/my-requested-product',views.MyRequestedProducts,basename = 'my-requested-product')
 router.register('api/requested-products',views.RequestedProducts,basename = 'requested-products'),
-router.register('api/mychats',views.Chats,basename='mychats'),
+router.register('api/my-chats',views.Chats,basename='my-chats'),
 router.register('api/getTokens',views.GetFCMToken,basename='getTokens'),
 router.register('api/delete-account-request',
                 views.DeleteAccountRequestViewSet, basename='delete-account-request'),

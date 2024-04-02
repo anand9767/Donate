@@ -122,7 +122,7 @@ class Chats(viewsets.ModelViewSet):
     serializer_class = MyChatsSerializer
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['intiatorId', 'friendId']
+    filterset_fields = ['initiatorId', 'friendId']
 
 
 class Products(viewsets.ModelViewSet):
