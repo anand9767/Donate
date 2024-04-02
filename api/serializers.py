@@ -54,9 +54,14 @@ class MyFCMTokenSerializer(serializers.ModelSerializer):
 
 
 class RequestedProductSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = RequestedProductDetail
-        fields = '__all__'
+        fields = ('id', 'title', 'description', 'latitude', 'longitude', 'number', 'email',
+                   'category', 'sub_category', 'timeStamp', 'user', 'name', 'user_id')
+        extra_kwargs = {
+            'user_id': {'source': 'user', 'write_only': True},
+        }
 
 class DeleteAccountRequestedSerializer(serializers.ModelSerializer):
     class Meta:

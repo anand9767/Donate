@@ -13,12 +13,12 @@ from api import views
 router = DefaultRouter()
 
 router.register('api/user',views.UserList,basename = 'user')
-router.register('api/myproduct',views.MyProducts,basename = 'myproduct')
+router.register('api/my-product',views.MyProducts,basename = 'my-product')
 router.register('api/product',views.Products,basename = 'product'),
-router.register('api/myrequestedproduct',views.MyRequestedProducts,basename = 'myrequestedproduct')
-router.register('api/requestedproducts',views.RequestedProducts,basename = 'requestedproducts'),
+router.register('api/my-requested-product',views.MyRequestedProducts,basename = 'my-requested-product')
+router.register('api/requested-products',views.RequestedProducts,basename = 'requested-products'),
 router.register('api/mychats',views.Chats,basename='mychats'),
-router.register('api/getTokens',views.GetFCMToken,basename='mytokens'),
+router.register('api/getTokens',views.GetFCMToken,basename='getTokens'),
 router.register('api/delete-account-request',
                 views.DeleteAccountRequestViewSet, basename='delete-account-request'),
 
