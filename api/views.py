@@ -34,6 +34,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.decorators import permission_classes, authentication_classes, api_view
+from rest_framework import pagination
 
 
 # Register API
@@ -97,7 +98,7 @@ class MyProducts(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['id','user__id']
+    filterset_fields = ['id', 'user__id']
     search_fields = ['title', 'category', 'sub_category']
 
 
@@ -125,9 +126,16 @@ class Chats(viewsets.ModelViewSet):
     filterset_fields = ['initiatorId', 'friendId']
 
 
+class LargeResultsSetPagination(pagination.PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
+
 class Products(viewsets.ModelViewSet):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
+    pagination_class = LargeResultsSetPagination
 
     serializer_class = ProductSerializer
 
@@ -328,7 +336,7 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id': user.pk,
             'email': user.email
         })
-    
+
 
 def calculateDistance(location1, location2):
     return ceil(distance(location1, location2).kilometers)
@@ -337,4 +345,3 @@ def calculateDistance(location1, location2):
 class DeleteAccountRequestViewSet(viewsets.ModelViewSet):
     queryset = DeleteAccountRequest.objects.all()
     serializer_class = DeleteAccountRequestedSerializer
-
