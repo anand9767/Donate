@@ -299,9 +299,9 @@ class CreateOrUpdateFCMToken(generics.ListCreateAPIView):
 
     queryset = FCMTokens.objects.all()
     serializer_class = MyFCMTokenSerializer
-
+    
     def create(self, request, *args, **kwargs):
-        myModel, created = FCMTokens.objects.update_or_create(userId=request.data['userId'],
+        myModel, created = FCMTokens.objects.update_or_create(user__id=request.data['user'],
                                                               defaults={
             'token': request.data['token'],
             'timestamp': request.data['timestamp']
