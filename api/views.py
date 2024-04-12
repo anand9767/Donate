@@ -119,6 +119,8 @@ class Chats(viewsets.ModelViewSet):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
 
+    pagination_class = None
+
     queryset = MyChats.objects.all()
     serializer_class = MyChatsSerializer
 
@@ -216,6 +218,7 @@ def delete_user(request, format=None):
 class UpdateProduct(generics.UpdateAPIView):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
+    pagination_class = None
 
     def put(self, request, *args, **kwargs):
         json_data = request.body
@@ -292,6 +295,8 @@ class CreateOrUpdateFCMToken(generics.ListCreateAPIView):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
 
+    pagination_class = None
+
     queryset = FCMTokens.objects.all()
     serializer_class = MyFCMTokenSerializer
 
@@ -316,6 +321,7 @@ class GetFCMToken(viewsets.ModelViewSet):
 
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
+    pagination_class = None
 
     queryset = FCMTokens.objects.all()
     serializer_class = MyFCMTokenSerializer
@@ -325,6 +331,7 @@ class GetFCMToken(viewsets.ModelViewSet):
 
 
 class CustomAuthToken(ObtainAuthToken):
+    pagination_class = None
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
@@ -343,5 +350,6 @@ def calculateDistance(location1, location2):
 
 
 class DeleteAccountRequestViewSet(viewsets.ModelViewSet):
+    pagination_class = None
     queryset = DeleteAccountRequest.objects.all()
     serializer_class = DeleteAccountRequestedSerializer
