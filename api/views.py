@@ -98,8 +98,23 @@ class MyProducts(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['id', 'user__id']
-    search_fields = ['title', 'category', 'sub_category']
+    # filterset_fields = ['id', 'user__id']
+    filterset_fields = {
+        "id": ["in", "exact"],
+        "user__id": ["in", "exact"],
+        "title": ["in", "exact"],
+        "category": ["in", "exact"],
+        "sub_category": ["in", "exact"],
+        "description": ["in", "exact"],
+    }
+    search_fields = {
+        "title": ["in", "exact"],
+        "category": ["in", "exact"],
+        "sub_category": ["in", "exact"],
+        "description": ["in", "exact"],
+    }
+    # search_fields = ['title', 'category',
+    #                  'sub_category', 'description']
 
 
 class MyRequestedProducts(viewsets.ModelViewSet):
