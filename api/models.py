@@ -32,6 +32,8 @@ class MyChats(models.Model):
     initiatorName = models.CharField(max_length=200,)
     friendName = models.CharField(max_length= 200)
     lastMessage = models.TextField(blank=True)
+    chat_room_id = models.TextField(max_length=50, null=True, blank=True)
+    sender = models.IntegerField(null=True, blank=True)
     timeStampMessage = models.CharField(max_length= 300)
     timeStampChat = models.CharField(max_length= 300)
 
