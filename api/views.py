@@ -82,7 +82,8 @@ class LoginAPI(KnoxLoginView):
 class UserList(viewsets.ModelViewSet):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
-
+    pagination_class = None
+    
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend]
