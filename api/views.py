@@ -96,10 +96,10 @@ class MyProducts(viewsets.ModelViewSet):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_class = [permissions.IsAuthenticated]
 
-    fcm.send_push_notification(
-        title='Test',
-        body='Test message',
-        registration_id='fdfZ_gZ-R_2ody0nH8pWYQ:APA91bHDrUx3rnC7s_wierPbRLmUnVWOUhgqa3aiXWEfqWWJbGb1ApPbo5e6ySKQ445oeg9qaIy9sz9xNmeZLQNtyl4Wfrb1p8rKMjdaVCcpYdWUMnIAwuw')
+    # fcm.send_push_notification(
+    #     title='Test',
+    #     body='Test message',
+    #     registration_id='fdfZ_gZ-R_2ody0nH8pWYQ:APA91bHDrUx3rnC7s_wierPbRLmUnVWOUhgqa3aiXWEfqWWJbGb1ApPbo5e6ySKQ445oeg9qaIy9sz9xNmeZLQNtyl4Wfrb1p8rKMjdaVCcpYdWUMnIAwuw')
 
     queryset = ProductDetail.objects.all().order_by('-created_at')
     serializer_class = ProductSerializer
