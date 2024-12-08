@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_filters',
     'geopy',
     'api',
+    'firebase_app',
     'corsheaders',
 ]
 

@@ -144,3 +144,4 @@ GitHub.sublime-settings
 .history
 
 firebase_constants.py
+firebase_admin_credentials.json
