@@ -6,7 +6,7 @@ from firebase_admin import messaging
 def send_fcm_notification(token, title, body, data=None):
     """
     Send a push notification using Firebase Cloud Messaging.
-    
+
     Args:
         token (str): The FCM device token.
         title (str): Notification title.
