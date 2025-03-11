@@ -36,6 +36,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import permission_classes, authentication_classes, api_view
 from rest_framework import pagination
 from Donate import fcm
+from users.models import *
+from .serializers import *
+from users.serializers import DeleteAccountRequestedSerializer
 
 
 # Register API

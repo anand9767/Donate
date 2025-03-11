@@ -67,10 +67,10 @@ class RequestedProductSerializer(serializers.ModelSerializer):
             'user_id': {'source': 'user', 'write_only': True},
         }
 
-class DeleteAccountRequestedSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DeleteAccountRequest
-        fields = '__all__'
+# class DeleteAccountRequestedSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = DeleteAccountRequest
+#         fields = '__all__'
 
 
 class ChangePasswordSerializer(serializers.Serializer):
