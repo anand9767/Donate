@@ -181,9 +181,6 @@ class Products(viewsets.ModelViewSet):
 
 
 class RequestedProducts(viewsets.ModelViewSet):
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_class = [permissions.IsAuthenticated]
-
     serializer_class = RequestedProductSerializer
 
     def get_queryset(self):

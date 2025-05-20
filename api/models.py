@@ -20,7 +20,7 @@ class ProductDetail(models.Model):
     extra_comments = models.TextField(blank = True,)
     timeStamp = models.DateTimeField(max_length=50)
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE,)
+        User, on_delete=models.CASCADE, related_name='api_product_details')
     # userName = models.CharField(max_length=15)
     name = models.CharField(max_length=50,default='')
     created_at = models.DateTimeField(auto_now_add=True)

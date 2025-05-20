@@ -104,24 +104,36 @@ class LoginAPI(KnoxLoginView):
 
 
 class UpdateUser(generics.UpdateAPIView):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    lookup_field = 'pk'  # optional, this is the default
 
     def put(self, request, *args, **kwargs):
         try:
-            user = self.get_object()
+            user = self.get_object()  # this now uses pk from the URL
             serializer = self.get_serializer(
                 user, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
-                return Response({"message": "User updated successfully", "user": serializer.data}, status=status.HTTP_200_OK)
-            return Response({"message": "Update failed", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({
+                    "message": "User updated successfully",
+                    "user": serializer.data
+                }, status=status.HTTP_200_OK)
+            return Response({
+                "message": "Update failed",
+                "errors": serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
         except User.DoesNotExist:
-            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({
+                "message": "User not found"
+            }, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            return Response({"message": "An unexpected error occurred", "error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                "message": "An unexpected error occurred",
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
         
 
 @csrf_exempt
