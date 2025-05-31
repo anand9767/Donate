@@ -24,4 +24,6 @@ urlpatterns = [
     path('', include('firebase_app.urls')),
     path('api/v2/users/', include('users.urls')),
     path('api/v2/product/', include('products.urls')),
+    path('api/v2/chat/', include('chats.urls')),
+    path('api/v2/', include('stories.urls')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,3 +1,7 @@
+from rest_framework.parsers import JSONParser
+from django.contrib.auth.models import User
+from rest_framework import status, permissions, authentication
+from rest_framework.views import APIView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from .serializers import UserSerializer
 from rest_framework.exceptions import ValidationError
@@ -10,7 +14,6 @@ from django.utils.decorators import method_decorator
 from rest_framework import status, generics, authentication, permissions  # type: ignore
 from rest_framework.response import Response  # type: ignore
 from rest_framework.parsers import JSONParser  # type: ignore
-from rest_framework.renderers import JSONRenderer  # type: ignore
 from rest_framework.decorators import api_view, authentication_classes, permission_classes # type: ignore
 from django.http import JsonResponse # type: ignore
 from django.contrib.auth import login # type: ignore
@@ -28,6 +31,7 @@ from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator 
 import logging
+from rest_framework.permissions import IsAuthenticated
 
 logger = logging.getLogger(__name__)  # Setup logging
 
@@ -134,29 +138,46 @@ class UpdateUser(generics.UpdateAPIView):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-        
+class DeleteUser(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [JSONParser]
 
-@csrf_exempt
-@api_view(['DELETE'])
-@authentication_classes([authentication.TokenAuthentication])
-@permission_classes([permissions.IsAuthenticated])
-def delete_user(request):
-    try:
-        python_data = JSONParser().parse(request)
-        user_id = python_data.get('id')
-        user = User.objects.get(id=user_id)
-        user.delete()
-        return Response({"message": "User deleted successfully"}, status=status.HTTP_200_OK)
-    except User.DoesNotExist:
-        return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
-    except Exception as e:
-        return Response({"message": "An unexpected error occurred", "error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def delete(self, request, *args, **kwargs):
+        try:
+            user_id = request.data.get('id')
 
-        
+            if not user_id:
+                return Response({
+                    "success": False,
+                    "message": "User ID is required."
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                user = User.objects.get(id=user_id)
+            except User.DoesNotExist:
+                return Response({
+                    "success": False,
+                    "message": "User not found."
+                }, status=status.HTTP_404_NOT_FOUND)
+
+            user.delete()
+            return Response({
+                "success": True,
+                "message": "User deleted successfully."
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                "success": False,
+                "message": "An unexpected error occurred.",
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class UserList(viewsets.ModelViewSet): # type: ignore
     pagination_class = None
-
+    permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend]
@@ -164,6 +185,7 @@ class UserList(viewsets.ModelViewSet): # type: ignore
 
 
 class DeleteAccountRequestViewSet(viewsets.ModelViewSet): # type: ignore
+    permission_classes = [IsAuthenticated]
     pagination_class = None
     queryset = DeleteAccountRequest.objects.all()
     serializer_class = DeleteAccountRequestedSerializer

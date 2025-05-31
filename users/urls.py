@@ -9,7 +9,7 @@ urlpatterns = [
     path('register/', views.RegisterAPI.as_view(), name='register'),
     path('login/', views.LoginAPI.as_view(), name='login'),
     path('update/<int:pk>/', views.UpdateUser.as_view(), name='user-update'),
-    path('delete/', views.delete_user, name='deleteuser'),
+    path('delete/', views.DeleteUser.as_view(), name='delete-user'),
     # path('reset-password/', views.ChangePasswordView.as_view(),
     #      name='changepassword'),
     path('delete-account-request/', views.DeleteAccountRequestViewSet.as_view(

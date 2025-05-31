@@ -40,9 +40,12 @@ class MyChats(models.Model):
 
 class FCMTokens(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, blank=True)
-    token = models.TextField()
-    timestamp = models.DateTimeField()
+        User, on_delete=models.CASCADE, related_name='fcm_tokens')
+    token = models.TextField()  # prevent duplicates
+    timestamp = models.DateTimeField(auto_now_add=True)  # auto-set on creation
+
+    def __str__(self):
+        return f"{self.user.username if self.user else 'Anonymous'} - {self.token[:20]}"
 
 
 class RequestedProductDetail(models.Model):

@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 
 
-
 class DeleteAccountRequest(models.Model):
     reasonForDelete = models.TextField()
     requestStatus = models.BooleanField(default=False)
