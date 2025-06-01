@@ -1,19 +1,14 @@
 from math import ceil
 from rest_framework import generics
 from rest_framework.filters import SearchFilter
-import io
-from django.views.decorators.csrf import csrf_exempt
 from api.models import *
 from rest_framework import generics
-from .serializers import *
 from django_filters.rest_framework import DjangoFilterBackend
 from geopy.distance import distance
-from rest_framework.decorators import api_view
 from rest_framework import pagination
 from users.models import *
 from .serializers import *
 from api.models import *
-from api.serializers import *
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.response import Response
 from rest_framework import status,permissions
@@ -194,23 +189,33 @@ class AddProductView(CreateAPIView):
 
 class UpdateProduct(generics.UpdateAPIView):
     queryset = ProductDetail.objects.all()
-    serializer_class = ProductSerializer
-    # Optional: restrict to authenticated users
+    serializer_class = ProductCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         try:
-            partial = kwargs.pop('partial', True)  # default to partial updates
+            partial = kwargs.pop('partial', True)
             instance = self.get_object()
+            images = request.data.get('images')
+
             serializer = self.get_serializer(
                 instance, data=request.data, partial=partial)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
+
+            # Update images if provided
+            if images is not None:
+                instance.images.all().delete()
+                for img_url in images:
+                    ProductImage.objects.create(
+                        product=instance, image_url=img_url)
+
             return Response({
                 "success": True,
                 "message": "Product updated successfully",
                 "data": serializer.data
             }, status=status.HTTP_200_OK)
+
         except Exception as e:
             return Response({
                 "success": False,
@@ -238,7 +243,12 @@ class DeleteProduct(APIView):
                     "message": f"No product found with id {product_id}"
                 }, status=status.HTTP_404_NOT_FOUND)
 
+            # Delete associated images
+            product.images.all().delete()
+
+            # Delete the product itself
             product.delete()
+
             return Response({
                 "success": True,
                 "message": "Product deleted successfully"
@@ -250,4 +260,3 @@ class DeleteProduct(APIView):
                 "message": "Failed to delete product",
                 "error": str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
-
